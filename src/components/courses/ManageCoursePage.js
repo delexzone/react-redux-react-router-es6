@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+
+import { toast } from "react-toastify";
+
 import * as courseActions from "../../redux/actions/courseActions";
 import * as authorActions from "../../redux/actions/authorActions";
 import CourseForm from "./CourseForm";
+import Spinner from "../common/Spinner";
 import { newCourse } from "../../../tools/mockData";
 
 function ManagedCoursePage({
@@ -17,6 +21,7 @@ function ManagedCoursePage({
 }) {
   const [course, setCourse] = useState({ ...props.course });
   const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (courses.length === 0) {
@@ -43,16 +48,23 @@ function ManagedCoursePage({
 
   function handleSave(event) {
     event.preventDefault();
-    saveCourse(course).then(history.push("/courses"));
+    setSaving(true);
+    saveCourse(course).then(() => {
+      history.push("/courses");
+      toast.success("Course saved.");
+    });
   }
 
-  return (
+  return authors.length === 0 || courses.length === 0 ? (
+    <Spinner />
+  ) : (
     <CourseForm
       course={course}
       authors={authors}
       errors={errors}
       onChange={handleChange}
       onSave={handleSave}
+      saving={saving}
     />
   );
 }
