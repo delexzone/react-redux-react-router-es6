@@ -10,7 +10,7 @@ import CourseForm from "./CourseForm";
 import Spinner from "../common/Spinner";
 import { newCourse } from "../../../tools/mockData";
 
-function ManagedCoursePage({
+export function ManageCoursePage({
   courses,
   authors,
   loadCourses,
@@ -83,7 +83,7 @@ function ManagedCoursePage({
   );
 }
 
-ManagedCoursePage.propTypes = {
+ManageCoursePage.propTypes = {
   course: PropTypes.object.isRequired,
   courses: PropTypes.array.isRequired,
   authors: PropTypes.array.isRequired,
@@ -114,4 +114,4 @@ const mapDispatchToProps = {
   saveCourse: courseActions.saveCourse,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManagedCoursePage);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);
